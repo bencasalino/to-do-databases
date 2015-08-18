@@ -1,4 +1,6 @@
 <?php
+
+
     class Category
     {
         private $name;
@@ -6,6 +8,7 @@
 
         function __construct($name, $id = null)
         {
+            // "this"
             $this->name = $name;
             $this->id = $id;
         }
@@ -27,6 +30,7 @@
 
         function save()
         {
+            // this puts info from Class Category into the actual database
             $GLOBALS['DB']->exec("INSERT INTO categories (name) VALUES ('{$this->getName()}')");
             $this->id = $GLOBALS['DB']->lastInsertId();
         }

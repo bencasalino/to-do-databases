@@ -1,12 +1,20 @@
 <?php
+
+    // path that link app.php to autoload.php
     require_once __DIR__."/../vendor/autoload.php";
+    // path that link app.php to /src/Task.php
     require_once __DIR__."/../src/Task.php";
+    // path that link app.php to /src/Category.php
     require_once __DIR__."/../src/Category.php";
 
+    //used to give more information on debugging code
     use Symfony\Component\Debug\Debug;
     Debug::enable();
 
+    //intialize Silex
     $app = new Silex\Application();
+
+    //looks for silex bugs possibly
     $app['debug'] = true;
 
 
@@ -17,13 +25,18 @@
     $DB = new PDO($server, $username, $password);
 
 
+    //tells app.php to use Silex/Twig and display results in views folder
 
     $app->register(new Silex\Provider\TwigServiceProvider(), array(
+        //why does it need to be an array?
         'twig.path' => __DIR__.'/../views'
     ));
 
+
+    // link to homepage
     $app->get("/", function() use ($app){
 
+        // shows twig which view to display
         return $app['twig']->render('index.html.twig', array('categories'=>Category::getAll()));
   });
 

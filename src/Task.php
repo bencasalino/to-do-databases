@@ -1,14 +1,18 @@
 <?php
 class Task
 {
-    private $description;
     private $id;
+    private $description;
+    private $date_due;
+    private $time_due;
     private $category_id;
 
-    function __construct($description, $id = null, $category_id)
+    function __construct($id = null, $description, $date_due, $time_due = '09:00', $category_id)
     {
-        $this->description = $description;
         $this->id = $id;
+        $this->description = $description;
+        $this->date_due = $date_due;
+        $this->time_due = $time_due;
         $this->category_id = $category_id;
     }
 
@@ -22,19 +26,30 @@ class Task
         $this->description = (string) $new_description;
     }
 
-    function getDescription()
-    {
-        return $this->description;
-    }
-
     function getCategoryId()
     {
         return $this->category_id;
     }
 
+    function getDescription()
+    {
+        return $this->description;
+    }
+
+    function getDateDue()
+    {
+        return $this->date_due;
+    }
+
+    function getTimeDue()
+    {
+        return $this->time_due;
+    }
+
+
     function save()
     {
-        $GLOBALS['DB']->exec("INSERT INTO tasks (description, category_id) VALUES ('{$this->getDescription()}', {$this->getCategoryId()})");
+        $GLOBALS['DB']->exec("INSERT INTO tasks (description, date_due, time_due, category_id) VALUES ('{$this->getDescription()}', '{$this->getDateDue()}', '{$this->getTimeDue()}', {$this->getCategoryId()})");
         $this->id = $GLOBALS['DB']->lastInsertId();
     }
 
@@ -44,10 +59,13 @@ class Task
         $tasks = array();
 
         foreach($returned_tasks as $task) {
-            $description = $task['description'];
+
             $id = $task['id'];
+            $description = $task['description'];
+            $date_due = $task['date_due'];
+            $time_due = $task['time_due'];
             $category_id = $task['category_id'];
-            $new_task = new Task($description, $id, $category_id);
+            $new_task = new Task($id, $description, $date_due, $time_due, $category_id);
             array_push($tasks, $new_task);
         }
 
