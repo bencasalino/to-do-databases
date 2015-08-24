@@ -98,6 +98,12 @@
 
             return $found_category;
         }
+
+        function delete()
+        {
+            $GLOBALS['DB']->exec("DELETE FROM categories WHERE id = {$this->getId()};");
+        }
+         
     }
 
 ?>

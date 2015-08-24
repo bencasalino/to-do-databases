@@ -57,7 +57,7 @@ Request::enableHttpMethodParameterOverride();
         return $app['twig']->render('categories.html.twig', array('category'=>$category, 'tasks'=> $category->getTasks()));
     });
 
-    // path to edit ind category  
+    // path to edit ind category
     $app->get("/categories/{id}", function($id) use($app) {
         $category = Category::find($id);
         return $app['twig']->render('category_edit.html.twig', array('category'=>$category, 'tasks'=> $category->getTasks()));
@@ -103,6 +103,11 @@ Request::enableHttpMethodParameterOverride();
     return $app['twig']->render('category_edit.html.twig', array('category' => $category));
 });
 
+    $app->delete("/categories/{id}", function($id) use ($app) {
+        $category = Category::find($id);
+        $category->delete();
+        return $app['twig']->render('index.html.twig', array('categories' => Category::getAll()));
+    });
 
 
 
