@@ -58,9 +58,9 @@
             $test_task->save();
 
             $description2 = "Meet with the Boss";
-            $id = 3;
+            $id2 = 3;
 
-            $test_task2 = new Task($id, $description2);
+            $test_task2 = new Task($id2, $description2);
             $test_task2->save();
 
             //Act
@@ -150,20 +150,21 @@
         {
             //Arrange
             $name = "Work stuff";
-            $id = null;
+            $id = 1;
             $test_category = new Category($name, $id);
             $test_category->save();
 
-            $name2 = "Home stuff";
-            $test_category2 = new Category($name2, $id);
-            $test_category2->save();
-
+            $description = "File reports";
+            $id2 = 2;
+            $test_task = new Task($description, $id2);
+            $test_task->save();
 
             //Act
+            $test_category->addTask($test_task);
             $test_category->delete();
 
             //Assert
-            $this->assertEquals([$test_category2], Category::getAll());
+            $this->assertEquals([], $test_task->getCategories());
         }
 
 

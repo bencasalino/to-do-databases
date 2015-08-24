@@ -78,8 +78,8 @@
         function delete()
         {
             $GLOBALS['DB']->exec("DELETE FROM categories WHERE id = {$this->getId()};");
+            $GLOBALS['DB']->exec("DELETE FROM categories_tasks WHERE category_id = {$this->getId()};");
         }
-
         function addTask($task)
         {
           $GLOBALS['DB']->exec("INSERT INTO categories_tasks (category_id, task_id) VALUES ({$this->getId()}, {$task->getId()});");
@@ -98,7 +98,7 @@
 
                 $description = $returned_task[0]['description'];
                 $id = $returned_task[0]['id'];
-                $new_task = new Task($description, $id);
+                $new_task = new Task($id, $description);
                 array_push($tasks, $new_task);
             }
             return $tasks;
