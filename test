@@ -1,1 +1,1 @@
-INSERT INTO tasks (description, date_due, time_due, category_id) VALUES ('wash the dog', '2015-02-02', '04:04:04', {153);
+INSERT INTO tasks (description) VALUES ('wash my hair');

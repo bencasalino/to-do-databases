@@ -49,24 +49,22 @@
             $test_category = new Category ($name, $id);
             $test_category->save();
 
-            $test_category_id = $test_category->getId();
+
 
             $description = "Email Client";
             $id = 2;
-            $date_due = "1990-12-12";
-            $time_due = "06:12:11";
-            $test_task = new Task($id, $description, $date_due, $time_due);
+
+            $test_task = new Task($id, $description);
             $test_task->save();
 
             $description2 = "Meet with the Boss";
             $id = 3;
-            $date_due2 = "1995-12-11";
-            $time_due2 = "06:34:00";
-            $test_task2 = new Task($id, $description2, $date_due2, $time_due2);
+
+            $test_task2 = new Task($id, $description2);
             $test_task2->save();
 
             //Act
-            $test_category->getTasks($test_task);
+            $test_category->addTask($test_task);
             $test_category->addTask($test_task2);
 
             //Assert
@@ -76,22 +74,24 @@
         function test_save()
         {
             $name = "Work stuff";
-            $test_Category = new Category($name);
-            $test_Category->save();
+            $id = 1;
+            $test_category = new Category($name);
+            $test_category->save();
 
             $result = Category::getAll();
 
-            $this->assertEquals($test_Category, $result[0]);
+            $this->assertEquals($test_category, $result[0]);
         }
 
         function test_getAll()
         {
             $name = "Work stuff";
+            $id = 1;
+            $id2 = 2;
             $name2 = "Home stuff";
-            $test_Category = new Category($name);
-
+            $test_Category = new Category($name, $id);
             $test_Category->save();
-            $test_Category2 = new Category($name2);
+            $test_Category2 = new Category($name2, $id2);
             $test_Category2->save();
 
             $result = Category::getAll();
@@ -175,11 +175,11 @@
             $test_category = new Category($name, $id);
             $test_category->save();
 
-            $description = "File reports";
             $id2 = 2;
-            $test_task = new Task($description, $id2);
-            $test_task->save();
+            $description = "Water the lawn";
 
+            $test_task = new Task($id, $description);
+            $test_task->save();
             //Act
             $test_category->addTask($test_task);
 
@@ -187,10 +187,7 @@
             $this->assertEquals($test_category->getTasks(), [$test_task]);
         }
 
-        function addTask($task)
-        {
-          $GLOBALS['DB']->exec("INSERT INTO categories_tasks (category_id, task_id) VALUES ({$this->getId()}, {$task->getId()});");
-        }
+
 
 
     }
