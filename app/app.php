@@ -11,6 +11,13 @@
     use Symfony\Component\Debug\Debug;
     Debug::enable();
 
+
+    // possibly used for override GET and POST ?
+    use Symfony\Component\HttpFoundation\Request;
+Request::enableHttpMethodParameterOverride();
+
+
+
     //intialize Silex
     $app = new Silex\Application();
 
@@ -50,6 +57,20 @@
         return $app['twig']->render('categories.html.twig', array('category'=>$category, 'tasks'=> $category->getTasks()));
     });
 
+    // path to edit ind category  
+    $app->get("/categories/{id}", function($id) use($app) {
+        $category = Category::find($id);
+        return $app['twig']->render('category_edit.html.twig', array('category'=>$category, 'tasks'=> $category->getTasks()));
+    });
+
+    // patch update for CATEGORY
+    $app->patch("/categories/{id}", function($id) use ($app) {
+    $name = $_POST['name'];
+    $category = Category::find($id);
+    $category->update($name);
+    return $app['twig']->render('categories.html.twig', array('category' => $category, 'tasks' => $category->getTasks()));
+});
+
     $app->post("/tasks", function() use ($app){
         $description = $_POST['description'];
         $category_id = $_POST['category_id'];
@@ -76,6 +97,15 @@
         Category::deleteAll();
         return $app['twig']->render('index.html.twig', array('categories'=>Category::getAll()));
     });
+
+    $app->get("/categories/{id}/edit", function($id) use ($app) {
+    $category = Category::find($id);
+    return $app['twig']->render('category_edit.html.twig', array('category' => $category));
+});
+
+
+
+
 
 return $app;
 
