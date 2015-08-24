@@ -45,29 +45,32 @@
         {
             //Arrange
             $name = "Work stuff";
-            $id = null;
+            $id = 1;
             $test_category = new Category ($name, $id);
             $test_category->save();
 
             $test_category_id = $test_category->getId();
 
             $description = "Email Client";
+            $id = 2;
             $date_due = "1990-12-12";
             $time_due = "06:12:11";
-            $test_task = new Task($id, $description, $date_due, $time_due, $test_category_id);
+            $test_task = new Task($id, $description, $date_due, $time_due);
             $test_task->save();
 
             $description2 = "Meet with the Boss";
+            $id = 3;
             $date_due2 = "1995-12-11";
             $time_due2 = "06:34:00";
-            $test_task2 = new Task($id, $description2, $date_due2, $time_due2, $test_category_id);
+            $test_task2 = new Task($id, $description2, $date_due2, $time_due2);
             $test_task2->save();
 
             //Act
-            $result = $test_category->getTasks();
+            $test_category->getTasks($test_task);
+            $test_category->addTask($test_task2);
 
             //Assert
-            $this->assertEquals([$test_task, $test_task2], $result);
+            $this->assertEquals($test_category->getTasks(), [$test_task, $test_task2]);
         }
 
         function test_save()
@@ -163,26 +166,32 @@
             $this->assertEquals([$test_category2], Category::getAll());
         }
 
-        function testDeleteCategoryTasks()
+
+            function testAddTask()
         {
             //Arrange
             $name = "Work stuff";
-            $id = null;
+            $id = 1;
             $test_category = new Category($name, $id);
             $test_category->save();
 
-            $description = "Build website";
-            $category_id = $test_category->getId();
-            $test_task = new task($description, $id, $category_id);
+            $description = "File reports";
+            $id2 = 2;
+            $test_task = new Task($description, $id2);
             $test_task->save();
 
-
             //Act
-            $test_category->delete();
+            $test_category->addTask($test_task);
 
             //Assert
-            $this->assertEquals([], Task::getAll());
+            $this->assertEquals($test_category->getTasks(), [$test_task]);
         }
+
+        function addTask($task)
+        {
+          $GLOBALS['DB']->exec("INSERT INTO categories_tasks (category_id, task_id) VALUES ({$this->getId()}, {$task->getId()});");
+        }
+
 
     }
 ?>

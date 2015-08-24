@@ -5,15 +5,14 @@ class Task
     private $description;
     private $date_due;
     private $time_due;
-    private $category_id;
 
-    function __construct($id = null, $description, $date_due, $time_due = '09:00', $category_id)
+
+    function __construct($id = null, $description, $date_due, $time_due = '09:00')
     {
         $this->id = $id;
         $this->description = $description;
         $this->date_due = $date_due;
         $this->time_due = $time_due;
-        $this->category_id = $category_id;
     }
 
     function getId()
@@ -49,7 +48,7 @@ class Task
 
     function save()
     {
-        $GLOBALS['DB']->exec("INSERT INTO tasks (description, date_due, time_due, category_id) VALUES ('{$this->getDescription()}', '{$this->getDateDue()}', '{$this->getTimeDue()}', {$this->getCategoryId()});");
+        $GLOBALS['DB']->exec("INSERT INTO tasks (description, date_due, time_due) VALUES ('{$this->getDescription()}', '{$this->getDateDue()}', '{$this->getTimeDue()}';");
         $this->id = $GLOBALS['DB']->lastInsertId();
     }
 
@@ -57,7 +56,7 @@ class Task
 
     function update($new_name)
     {
-        $GLOBALS['DB']->exec("UPDATE tasks SET name = '{$new_name}' WHERE id = {$this->getId()};");
+        $GLOBALS['DB']->exec("UPDATE tasks SET description = '{$new_description}' WHERE id = {$this->getId()};");
         $this->setName($new_name);
     }
 
@@ -73,8 +72,7 @@ class Task
             $description = $task['description'];
             $date_due = $task['date_due'];
             $time_due = $task['time_due'];
-            $category_id = $task['category_id'];
-            $new_task = new Task($id, $description, $date_due, $time_due, $category_id);
+            $new_task = new Task($id, $description, $date_due, $time_due);
             array_push($tasks, $new_task);
         }
 

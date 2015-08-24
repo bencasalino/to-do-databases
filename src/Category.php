@@ -28,30 +28,6 @@
             return $this->id;
         }
 
-
-
-        function getTasks()
-        {
-        $tasks = array();
-          //goes to database and searches for the input id
-          $returned_tasks = $GLOBALS['DB']->query("SELECT * FROM tasks WHERE category_id = {$this->getId()};");
-          //loops through search results and pulls out correct property values
-          foreach($returned_tasks as $task) {
-              $id = $task['id'];
-              $description = $task['description'];
-              $date_due = $task['date_due'];
-              $time_due = $task['time_due'];
-              $category_id = $task['category_id'];
-              //creates a new Task from the found property values
-              $new_task = new Task($id, $description, $date_due, $time_due, $category_id);
-              //this returns multiple matches and returns all matches
-              array_push($tasks, $new_task);
-        }
-          return $tasks;
-        }
-
-
-
           function update($new_name)
           {
           $GLOBALS['DB']->exec("UPDATE categories SET name = '{$new_name}' WHERE id = {$this->getId()};");
@@ -103,7 +79,12 @@
         {
             $GLOBALS['DB']->exec("DELETE FROM categories WHERE id = {$this->getId()};");
         }
-         
+
+        function addTask($task)
+        {
+          $GLOBALS['DB']->exec("INSERT INTO categories_tasks (category_id, task_id) VALUES ({$this->getId()}, {$task->getId()});");
+        }
+
     }
 
 ?>
