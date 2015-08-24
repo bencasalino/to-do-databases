@@ -52,14 +52,14 @@
             $test_category_id = $test_category->getId();
 
             $description = "Email Client";
-            $date_due = "1/3/1390";
-            $time_due = "6:00pm";
+            $date_due = "1990-12-12";
+            $time_due = "06:12:11";
             $test_task = new Task($id, $description, $date_due, $time_due, $test_category_id);
             $test_task->save();
 
             $description2 = "Meet with the Boss";
-            $date_due2 = "7/7/5000";
-            $time_due2 = "2:00am";
+            $date_due2 = "1995-12-11";
+            $time_due2 = "06:34:00";
             $test_task2 = new Task($id, $description2, $date_due2, $time_due2, $test_category_id);
             $test_task2->save();
 
@@ -86,6 +86,7 @@
             $name = "Work stuff";
             $name2 = "Home stuff";
             $test_Category = new Category($name);
+
             $test_Category->save();
             $test_Category2 = new Category($name2);
             $test_Category2->save();

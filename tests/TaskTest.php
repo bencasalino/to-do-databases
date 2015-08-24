@@ -14,7 +14,7 @@
 
      class TaskTest extends PHPUnit_Framework_TestCase
      {
-
+         //
          protected function tearDown()
          {
              Task::deleteAll();
@@ -30,8 +30,8 @@
              $test_category->save();
 
              $description = "Wash the dog";
-             $date_due = "9/25/1990";
-             $time_due = "9:00am";
+             $date_due = "1990-12-11";
+             $time_due = "09:00:00";
              $category_id = $test_category->getId();
              $test_task = new Task($id, $description, $date_due, $time_due, $category_id);
 
@@ -49,7 +49,7 @@
               //Arrange
               $name = "Work stuff";
               $id = null;
-              $test_category = new Category( $id, $descrption, $date_due, $time_due,  $category_id, );
+              $test_category = new Category ( $id, $name);
               $test_category->save();
 
               $new_name = "Home stuff";
@@ -72,19 +72,20 @@
              $test_category->save();
 
              $description = "Wash the dog";
-             $date_due = "9/25/1990";
-             $time_due = "9:00am";
+             $date_due = "1990-11-11";
+             $time_due = "09:00:00";
              $category_id = $test_category->getId();
              $test_task = new Task($id, $description, $date_due, $time_due, $category_id);
              $test_task-> save();
 
              $description2 = "Water the Lawn";
-             $date_due2 = "3/28/2000";
-             $time_due2 = "10:00am";
+             $date_due2 = "2000-11-12";
+             $time_due2 = "10:00:00";
              $test_task2 = new Task($id, $description2, $date_due2, $time_due2, $category_id);
              $test_task2->save();
 
              $result = Task::getAll();
+             var_dump($result);
 
              $this->assertEquals([$test_task, $test_task2], $result);
          }
@@ -97,15 +98,15 @@
              $test_category->save();
 
              $description = "Wash the dog";
-             $date_due = "9/25/1990";
-             $time_due = "9:00am";
+             $date_due = "1990-12-11";
+             $time_due = "09:00:00";
              $category_id = $test_category->getId();
              $test_task = new Task($id, $description, $date_due, $time_due, $category_id);
              $test_task->save();
 
              $description2 = "Water the Lawn";
-             $date_due2 = "3/28/2000";
-             $time_due2 = "10:00am";
+             $date_due2 = "2000-12-11";
+             $time_due2 = "10:12:00";
              $test_task2 = new Task($id, $description2, $date_due2, $time_due2, $category_id);
              $test_task2->save();
 
@@ -124,8 +125,8 @@
              $test_category->save();
 
              $description = "Wash the dog";
-             $date_due = "9/25/1990";
-             $time_due = "9:00am";
+             $date_due = "1990-12-11";
+             $time_due = "10:12:00";
              $category_id = $test_category->getId();
              $test_task = new Task($id, $description, $date_due, $time_due, $category_id);
              $test_task->save();
@@ -146,15 +147,15 @@
              $test_category->save();
 
              $description = "Wash the dog";
-             $date_due = "9/25/1990";
-             $time_due = "9:00am";
+             $date_due = "1990-12-12";
+             $time_due = "09:00:00";
              $category_id = $test_category->getId();
              $test_task = new Task($id, $description, $date_due, $time_due, $category_id);
              $test_task->save();
 
              $description2 = "Water the Lawn";
-             $date_due2 = "3/28/2000";
-             $time_due2 = "10:00am";
+             $date_due2 = "2000-12-09";
+             $time_due2 = "12:10:00";
              $test_task2 = new Task($id, $description2, $date_due2, $time_due2, $category_id);
              $test_task2->save();
 

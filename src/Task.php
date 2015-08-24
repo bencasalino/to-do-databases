@@ -49,7 +49,7 @@ class Task
 
     function save()
     {
-        $GLOBALS['DB']->exec("INSERT INTO tasks (description, date_due, time_due, category_id) VALUES ('{$this->getDescription()}', '{$this->getDateDue()}', '{$this->getTimeDue()}', {$this->getCategoryId()})");
+        $GLOBALS['DB']->exec("INSERT INTO tasks (description, date_due, time_due, category_id) VALUES ('{$this->getDescription()}', '{$this->getDateDue()}', '{$this->getTimeDue()}', {$this->getCategoryId()});");
         $this->id = $GLOBALS['DB']->lastInsertId();
     }
 
@@ -67,7 +67,6 @@ class Task
     {
         $returned_tasks = $GLOBALS['DB']->query("SELECT * FROM tasks;");
         $tasks = array();
-
         foreach($returned_tasks as $task) {
 
             $id = $task['id'];
